@@ -3537,7 +3537,7 @@ class PlayState extends MusicBeatState
 			if(!Achievements.achievementsUnlocked[arrayIDs[i]][1]) {
 				switch(arrayIDs[i]) {
 					case 1 | 2 | 3 | 4 | 5 | 6 | 7:
-						if(isStoryMode && campaignMisses < 1 && storyPlaylist.length <= 1 && storyWeek == arrayIDs[i] && !changedDifficulty && !usedPractice) {
+						if(isStoryMode && campaignMisses < 1 && songMisses < 1 && storyPlaylist.length <= 1 && storyWeek == arrayIDs[i] && !changedDifficulty && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}
