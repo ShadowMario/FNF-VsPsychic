@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="PSYCHICNOTE_assets.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="arrowglowLEFT0000" x="4" y="4" width="161" height="166" pivotX="67.55" pivotY="-4.85" frameX="-39" frameY="-39" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0001" x="165" y="4" width="199" height="204" frameX="-20" frameY="-20" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0002" x="364" y="4" width="239" height="244"/>
+	<SubTexture name="arrowglowLEFT0003" x="364" y="4" width="239" height="244"/>
+	<SubTexture name="arrowglowLEFT0004" x="364" y="4" width="239" height="244"/>
+	<SubTexture name="arrowglowLEFT0005" x="364" y="4" width="239" height="244"/>
+	<SubTexture name="arrowglowLEFT0006" x="364" y="4" width="239" height="244"/>
+	<SubTexture name="arrowglowLEFT0007" x="603" y="4" width="227" height="232" frameX="-6" frameY="-6" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0008" x="830" y="4" width="215" height="220" frameX="-12" frameY="-12" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0009" x="1045" y="4" width="205" height="210" frameX="-17" frameY="-17" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0010" x="1250" y="4" width="193" height="198" frameX="-23" frameY="-23" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0011" x="1443" y="4" width="181" height="186" frameX="-29" frameY="-29" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0012" x="1624" y="4" width="169" height="174" frameX="-35" frameY="-35" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowLEFT0013" x="1793" y="4" width="153" height="158" frameX="-41" frameY="-41" frameWidth="239" frameHeight="244"/>
+	<SubTexture name="arrowglowUP0000" x="4" y="248" width="164" height="162" pivotX="69.05" pivotY="-6.4" frameX="-39" frameY="-39" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0001" x="168" y="248" width="202" height="200" frameX="-20" frameY="-20" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0002" x="370" y="248" width="242" height="240"/>
+	<SubTexture name="arrowglowUP0003" x="370" y="248" width="242" height="240"/>
+	<SubTexture name="arrowglowUP0004" x="370" y="248" width="242" height="240"/>
+	<SubTexture name="arrowglowUP0005" x="370" y="248" width="242" height="240"/>
+	<SubTexture name="arrowglowUP0006" x="370" y="248" width="242" height="240"/>
+	<SubTexture name="arrowglowUP0007" x="612" y="248" width="230" height="228" frameX="-6" frameY="-6" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0008" x="842" y="248" width="218" height="216" frameX="-12" frameY="-12" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0009" x="1060" y="248" width="208" height="206" frameX="-17" frameY="-17" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0010" x="1268" y="248" width="196" height="194" frameX="-23" frameY="-23" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0011" x="1464" y="248" width="184" height="182" frameX="-29" frameY="-29" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0012" x="1648" y="248" width="172" height="170" frameX="-35" frameY="-35" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowUP0013" x="4" y="248" width="164" height="162" frameX="-41" frameY="-41" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0000" x="1820" y="248" width="164" height="162" pivotX="69.1" pivotY="-2.35" frameX="-39" frameY="-39" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0001" x="4" y="488" width="202" height="200" frameX="-20" frameY="-20" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0002" x="206" y="488" width="242" height="240"/>
+	<SubTexture name="arrowglowDOWN0003" x="206" y="488" width="242" height="240"/>
+	<SubTexture name="arrowglowDOWN0004" x="206" y="488" width="242" height="240"/>
+	<SubTexture name="arrowglowDOWN0005" x="206" y="488" width="242" height="240"/>
+	<SubTexture name="arrowglowDOWN0006" x="206" y="488" width="242" height="240"/>
+	<SubTexture name="arrowglowDOWN0007" x="448" y="488" width="230" height="228" frameX="-6" frameY="-6" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0008" x="678" y="488" width="218" height="216" frameX="-12" frameY="-12" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0009" x="896" y="488" width="208" height="206" frameX="-17" frameY="-17" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0010" x="1104" y="488" width="196" height="194" frameX="-23" frameY="-23" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0011" x="1300" y="488" width="184" height="182" frameX="-29" frameY="-29" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0012" x="1484" y="488" width="172" height="170" frameX="-35" frameY="-35" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowDOWN0013" x="1820" y="248" width="164" height="162" frameX="-41" frameY="-41" frameWidth="242" frameHeight="240"/>
+	<SubTexture name="arrowglowRIGHT0000" x="1656" y="488" width="160" height="166" pivotX="69.6" pivotY="-2.9" frameX="-39" frameY="-39" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0001" x="1816" y="488" width="198" height="204" frameX="-20" frameY="-20" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0002" x="4" y="728" width="238" height="244"/>
+	<SubTexture name="arrowglowRIGHT0003" x="4" y="728" width="238" height="244"/>
+	<SubTexture name="arrowglowRIGHT0004" x="4" y="728" width="238" height="244"/>
+	<SubTexture name="arrowglowRIGHT0005" x="4" y="728" width="238" height="244"/>
+	<SubTexture name="arrowglowRIGHT0006" x="4" y="728" width="238" height="244"/>
+	<SubTexture name="arrowglowRIGHT0007" x="242" y="728" width="226" height="232" frameX="-6" frameY="-6" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0008" x="468" y="728" width="214" height="220" frameX="-12" frameY="-12" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0009" x="682" y="728" width="204" height="210" frameX="-17" frameY="-17" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0010" x="886" y="728" width="192" height="198" frameX="-23" frameY="-23" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0011" x="1078" y="728" width="180" height="186" frameX="-29" frameY="-29" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0012" x="1258" y="728" width="168" height="174" frameX="-35" frameY="-35" frameWidth="238" frameHeight="244"/>
+	<SubTexture name="arrowglowRIGHT0013" x="1656" y="488" width="160" height="166" frameX="-41" frameY="-41" frameWidth="238" frameHeight="244"/>
+</TextureAtlas>

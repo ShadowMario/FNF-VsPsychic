@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sussyTower.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="yeah0000" x="0" y="0" width="443" height="824" pivotX="-10.8" pivotY="0.65" frameX="-2" frameY="-27" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0001" x="0" y="0" width="443" height="824" frameX="-2" frameY="-27" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0002" x="443" y="0" width="444" height="840" frameX="-1" frameY="-11" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0003" x="443" y="0" width="444" height="840" frameX="-1" frameY="-11" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0004" x="887" y="0" width="443" height="845" frameX="-1" frameY="-6" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0005" x="887" y="0" width="443" height="845" frameX="-1" frameY="-6" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0006" x="1330" y="0" width="444" height="851" frameX="0" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0007" x="1330" y="0" width="444" height="851" frameX="0" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0008" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0009" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0010" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0011" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0012" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+	<SubTexture name="yeah0013" x="0" y="851" width="444" height="851" frameX="-1" frameY="0" frameWidth="445" frameHeight="851"/>
+</TextureAtlas>

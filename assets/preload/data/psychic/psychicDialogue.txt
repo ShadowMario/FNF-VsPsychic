@@ -1,0 +1,10 @@
+psychic:bf
+:0:talk:0.05:0:What brings you here so late at night?
+:1:talk:0.05:0:Beep.
+:0:angry:0.05:1:Drop the act already.
+:0:unamused:0.05:0:I could feel your malicious intent the\nmoment you stepped foot in here.
+:1:talk:0.05:0:Bep bee aa skoo dep?
+:0:talk:0.05:0:I wouldn't try the door if I were you.
+:0:unamused:0.05:0:Now...
+:0:talk:0.05:0:I have a couple of questions to ask you...
+:0:angry:0.1:0:And you WILL answer them.
