@@ -13,6 +13,19 @@ class Highscore
 	#end
 
 
+	public static function resetSong(song:String, diff:Int = 0):Void
+	{
+		var daSong:String = formatSong(song, diff);
+
+		setScore(daSong, 0);
+		setRating(daSong, 0);
+	}
+
+	public static function resetWeek(week:Int, diff:Int = 0):Void
+	{
+		setScore(formatSong('week' + week, diff), 0);
+	}
+
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0, ?rating:Float = -1):Void
 	{
 		var daSong:String = formatSong(song, diff);

@@ -72,7 +72,7 @@
 	<SubTexture name="spooky kids YEAH!!0006" x="3203" y="571" width="577" height="515" frameX="-35" frameY="-13" frameWidth="639" frameHeight="528"/>
 	<SubTexture name="spooky kids YEAH!!0007" x="3203" y="571" width="577" height="515" frameX="-35" frameY="-13" frameWidth="639" frameHeight="528"/>
 	<SubTexture name="spooky kids YEAH!!0008" x="3203" y="571" width="577" height="515" frameX="-35" frameY="-13" frameWidth="639" frameHeight="528"/>
-	<SubTexture name="spooky kids YEAH!!0009" x="3173" y="571" width="577" height="515" frameX="-35" frameY="-13" frameWidth="639" frameHeight="528"/>
+	<SubTexture name="spooky kids YEAH!!0009" x="3203" y="571" width="577" height="515" frameX="-35" frameY="-13" frameWidth="639" frameHeight="528"/>
 	<SubTexture name="spooky sing right0000" x="0" y="1103" width="442" height="524" pivotX="-1.25" pivotY="-0.25" frameX="0" frameY="-9" frameWidth="442" frameHeight="533"/>
 	<SubTexture name="spooky sing right0001" x="0" y="1103" width="442" height="524" frameX="0" frameY="-9" frameWidth="442" frameHeight="533"/>
 	<SubTexture name="spooky sing right0002" x="447" y="1103" width="437" height="533" frameX="0" frameY="0" frameWidth="442" frameHeight="533"/>

@@ -22,6 +22,7 @@ class Character extends FlxSprite
 	public var specialAnim:Bool = false;
 	public var animationNotes:Array<Dynamic> = [];
 	public var stunned:Bool = false;
+	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -97,6 +98,7 @@ class Character extends FlxSprite
 				quickAnimAdd('singRIGHT', 'Dad Sing Note RIGHT');
 				quickAnimAdd('singDOWN', 'Dad Sing Note DOWN');
 				quickAnimAdd('singLEFT', 'Dad Sing Note LEFT');
+				singDuration = 6.1;
 
 				playAnim('idle');
 			case 'spooky':
@@ -336,6 +338,7 @@ class Character extends FlxSprite
 			case 'psychic':
 				frames = Paths.getSparrowAtlas('characters/Psychic');
 				quickAnimAdd('idle', 'PSYCHIC IDLE');
+				animation.addByIndices('idleHair', 'PSYCHIC IDLE', [6, 7, 8, 9, 10, 11, 12, 13], "", 24, true);
 				quickAnimAdd('singLEFT', 'PSYCHIC LEFT');
 				quickAnimAdd('singLEFT-alt', 'PSYCHIC left ALT');
 				quickAnimAdd('singDOWN', 'PSYCHIC DOWN');
@@ -345,6 +348,7 @@ class Character extends FlxSprite
 				quickAnimAdd('singRIGHT', 'PSYCHIC RIGHT');
 				quickAnimAdd('singRIGHT-alt', 'PSYCHIC right ALT');
 				quickAnimAdd('ability', 'PSYCHIC POWERS');
+				singDuration = 4.4;
 
 			case 'sussy-tower':
 				frames = Paths.getSparrowAtlas('characters/sussyTower');
@@ -403,29 +407,30 @@ class Character extends FlxSprite
 				holdTimer += elapsed;
 			}
 
-			var dadVar:Float = 4;
-
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			if (holdTimer >= Conductor.stepCrochet * 0.001 * singDuration)
 			{
 				dance();
 				holdTimer = 0;
 			}
 		}
 
-		switch (curCharacter)
-		{
-			case 'gf':
-				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-					playAnim('danceRight');
-			case 'bf-car' | 'mom-car':
-				if(animation.curAnim.finished) {
-					if(animation.curAnim.name == 'idle')
-						playAnim('idleHair');
-					else if(animation.curAnim.name.startsWith('sing') && !animation.curAnim.name.startsWith('miss'))
-						playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - 5);
-				}
+		if(!debugMode) {
+			switch (curCharacter)
+			{
+				case 'gf':
+					if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
+						playAnim('danceRight');
+				case 'bf-car' | 'mom-car' | 'psychic':
+					if(animation.curAnim.finished) {
+						if(animation.curAnim.name == 'idle')
+							playAnim('idleHair');
+						else if(animation.curAnim.name.startsWith('sing') && !animation.curAnim.name.startsWith('miss')) {
+							var value:Int = 4;
+							if(curCharacter == 'psychic') value = 8;
+							playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - value);
+						}
+					}
+			}
 		}
 
 		super.update(elapsed);

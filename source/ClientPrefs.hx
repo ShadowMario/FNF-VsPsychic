@@ -6,17 +6,20 @@ import flixel.input.keyboard.FlxKey;
 import Controls;
 
 class ClientPrefs {
+	//TO DO: Redo ClientPrefs in a way that isn't too stupid
 	public static var downScroll:Bool = false;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
-	public static var doubleFps:Bool = false;
+	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
-	public static var arrowColors:Array<Int> = [0, 0, 0, 0];
+	public static var hideHud:Bool = false;
+	public static var noteOffset:Int = 0;
+	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
 	public static var defaultKeys:Array<FlxKey> = [
 		A, LEFT,			//Note Left
@@ -34,6 +37,24 @@ class ClientPrefs {
 		BACKSPACE, ESCAPE,	//Back
 		ENTER, ESCAPE		//Pause
 	];
+	//Every key has two binds, these binds are defined on defaultKeys! If you want your control to be changeable, you have to add it on ControlsSubState (inside OptionsState)'s list
+	public static var keyBinds:Array<Dynamic> = [
+		//Key Bind, Name for ControlsSubState
+		[Control.NOTE_LEFT, 'Left'],
+		[Control.NOTE_DOWN, 'Down'],
+		[Control.NOTE_UP, 'Up'],
+		[Control.NOTE_RIGHT, 'Right'],
+
+		[Control.UI_LEFT, 'Left '],		//Added a space for not conflicting on ControlsSubState
+		[Control.UI_DOWN, 'Down '],		//Added a space for not conflicting on ControlsSubState
+		[Control.UI_UP, 'Up '],			//Added a space for not conflicting on ControlsSubState
+		[Control.UI_RIGHT, 'Right '],	//Added a space for not conflicting on ControlsSubState
+
+		[Control.RESET, 'Reset'],
+		[Control.ACCEPT, 'Accept'],
+		[Control.BACK, 'Back'],
+		[Control.PAUSE, 'Pause']
+	];
 	public static var lastControls:Array<FlxKey> = defaultKeys.copy();
 
 	public static function saveSettings() {
@@ -43,11 +64,13 @@ class ClientPrefs {
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
-		FlxG.save.data.doubleFps = doubleFps;
+		FlxG.save.data.framerate = framerate;
 		FlxG.save.data.cursing = cursing;
 		FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
-		FlxG.save.data.arrowColors = arrowColors;
+		FlxG.save.data.noteOffset = noteOffset;
+		FlxG.save.data.hideHud = hideHud;
+		FlxG.save.data.arrowHSV = arrowHSV;
 
 		var achieves:Array<String> = [];
 		for (i in 0...Achievements.achievementsUnlocked.length) {
@@ -60,7 +83,7 @@ class ClientPrefs {
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls', 'ninjamuffin99'); //Placing this in a separate save so that it can be deleted without removing your Score and stuff
+		save.bind('controls', 'ninjamuffin99'); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = lastControls;
 		save.flush();
 		FlxG.log.add("Settings saved!");
@@ -92,14 +115,14 @@ class ClientPrefs {
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
 		}
-		if(FlxG.save.data.doubleFps != null) {
-			doubleFps = FlxG.save.data.doubleFps;
-			if(doubleFps) {
-				FlxG.updateFramerate = 120;
-				FlxG.drawFramerate = 120;
+		if(FlxG.save.data.framerate != null) {
+			framerate = FlxG.save.data.framerate;
+			if(framerate > FlxG.drawFramerate) {
+				FlxG.updateFramerate = framerate;
+				FlxG.drawFramerate = framerate;
 			} else {
-				FlxG.drawFramerate = 60;
-				FlxG.updateFramerate = 60;
+				FlxG.drawFramerate = framerate;
+				FlxG.updateFramerate = framerate;
 			}
 		}
 		/*if(FlxG.save.data.cursing != null) {
@@ -111,50 +134,55 @@ class ClientPrefs {
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
 		}
-		if(FlxG.save.data.arrowColors != null) {
-			arrowColors = FlxG.save.data.arrowColors;
+		if(FlxG.save.data.hideHud != null) {
+			hideHud = FlxG.save.data.hideHud;
+		}
+		if(FlxG.save.data.noteOffset != null) {
+			noteOffset = FlxG.save.data.noteOffset;
+		}
+		if(FlxG.save.data.arrowHSV != null) {
+			arrowHSV = FlxG.save.data.arrowHSV;
 		}
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls', 'ninjamuffin99');
 		if(save != null && save.data.customControls != null) {
-			removeControls(lastControls);
-			lastControls = save.data.customControls;
-			loadControls(lastControls);
+			reloadControls(save.data.customControls);
 		}
 	}
 
-	public static function removeControls(controlArray:Array<FlxKey>) {
-		PlayerSettings.player1.controls.unbindKeys(Control.NOTE_LEFT, [controlArray[0], controlArray[1]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.NOTE_DOWN, [controlArray[2], controlArray[3]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.NOTE_UP, [controlArray[4], controlArray[5]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.NOTE_RIGHT, [controlArray[6], controlArray[7]]);
-
-		PlayerSettings.player1.controls.unbindKeys(Control.UI_LEFT, [controlArray[8], controlArray[9]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.UI_DOWN, [controlArray[10], controlArray[11]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.UI_UP, [controlArray[12], controlArray[13]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.UI_RIGHT, [controlArray[14], controlArray[15]]);
-
-		PlayerSettings.player1.controls.unbindKeys(Control.RESET, [controlArray[16], controlArray[17]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.ACCEPT, [controlArray[18], controlArray[19]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.BACK, [controlArray[20], controlArray[21]]);
-		PlayerSettings.player1.controls.unbindKeys(Control.PAUSE, [controlArray[22], controlArray[23]]);
+	public static function reloadControls(newKeys:Array<FlxKey>) {
+		ClientPrefs.removeControls(ClientPrefs.lastControls);
+		ClientPrefs.lastControls = newKeys.copy();
+		ClientPrefs.loadControls(ClientPrefs.lastControls);
 	}
 
-	public static function loadControls(controlArray:Array<FlxKey>) {
-		PlayerSettings.player1.controls.bindKeys(Control.NOTE_LEFT, [controlArray[0], controlArray[1]]);
-		PlayerSettings.player1.controls.bindKeys(Control.NOTE_DOWN, [controlArray[2], controlArray[3]]);
-		PlayerSettings.player1.controls.bindKeys(Control.NOTE_UP, [controlArray[4], controlArray[5]]);
-		PlayerSettings.player1.controls.bindKeys(Control.NOTE_RIGHT, [controlArray[6], controlArray[7]]);
-
-		PlayerSettings.player1.controls.bindKeys(Control.UI_LEFT, [controlArray[8], controlArray[9]]);
-		PlayerSettings.player1.controls.bindKeys(Control.UI_DOWN, [controlArray[10], controlArray[11]]);
-		PlayerSettings.player1.controls.bindKeys(Control.UI_UP, [controlArray[12], controlArray[13]]);
-		PlayerSettings.player1.controls.bindKeys(Control.UI_RIGHT, [controlArray[14], controlArray[15]]);
-
-		PlayerSettings.player1.controls.bindKeys(Control.RESET, [controlArray[16], controlArray[17]]);
-		PlayerSettings.player1.controls.bindKeys(Control.ACCEPT, [controlArray[18], controlArray[19]]);
-		PlayerSettings.player1.controls.bindKeys(Control.BACK, [controlArray[20], controlArray[21]]);
-		PlayerSettings.player1.controls.bindKeys(Control.PAUSE, [controlArray[22], controlArray[23]]);
+	private static function removeControls(controlArray:Array<FlxKey>) {
+		for (i in 0...keyBinds.length) {
+			var controlValue:Int = i*2;
+			var controlsToRemove:Array<FlxKey> = [];
+			for (j in 0...2) {
+				if(controlArray[controlValue+j] != NONE) {
+					controlsToRemove.push(controlArray[controlValue+j]);
+				}
+			}
+			if(controlsToRemove.length > 0) {
+				PlayerSettings.player1.controls.unbindKeys(keyBinds[i][0], controlsToRemove);
+			}
+		}
+	}
+	private static function loadControls(controlArray:Array<FlxKey>) {
+		for (i in 0...keyBinds.length) {
+			var controlValue:Int = i*2;
+			var controlsToAdd:Array<FlxKey> = [];
+			for (j in 0...2) {
+				if(controlArray[controlValue+j] != NONE) {
+					controlsToAdd.push(controlArray[controlValue+j]);
+				}
+			}
+			if(controlsToAdd.length > 0) {
+				PlayerSettings.player1.controls.bindKeys(keyBinds[i][0], controlsToAdd);
+			}
+		}
 	}
 }

@@ -6,6 +6,7 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -16,16 +17,18 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
+import Achievements;
 
 using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	var psychEngineVersion:String = '0.1';
+	var psychEngineVersion:String = '0.1.1';
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
-
+	private var camGame:FlxCamera;
+	private var camAchievement:FlxCamera;
 	
 	var optionShit:Array<String> = ['story_mode', 'freeplay', 'awards', 'credits', #if !switch 'donate', #end 'options'];
 
@@ -40,13 +43,16 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		camGame = new FlxCamera();
+		camAchievement = new FlxCamera();
+		camAchievement.bgColor.alpha = 0;
+
+		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camAchievement);
+		FlxCamera.defaultCameras = [camGame];
+
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
-
-		if (!FlxG.sound.music.playing)
-		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		}
 
 		persistentUpdate = persistentDraw = true;
 
@@ -87,7 +93,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			menuItem.scrollFactor.set(0, 0.22);
+			menuItem.scrollFactor.set(0, 0.27);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
@@ -110,12 +116,21 @@ class MainMenuState extends MusicBeatState
 
 		Achievements.loadAchievements();
 		var leDate = Date.now();
-		if (!Achievements.achievementsUnlocked[0][1] && leDate.getDay() == 5 && leDate.getHours() >= 20) { //It's a friday night. WEEEEEEEEEEEEEEEEEE
-			Achievements.achievementsUnlocked[0][1] = true;
+		if (!Achievements.achievementsUnlocked[achievementID][1] && leDate.getDay() == 5 && leDate.getHours() >= 18) { //It's a friday night. WEEEEEEEEEEEEEEEEEE
+			Achievements.achievementsUnlocked[achievementID][1] = true;
+			giveAchievement();
 			ClientPrefs.saveSettings();
 		}
 
 		super.create();
+	}
+
+	// Unlocks "Freaky on a Friday Night" achievement
+	var achievementID:Int = 0;
+	function giveAchievement() {
+		add(new AchievementObject(achievementID, camAchievement));
+		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		trace('Giving achievement ' + achievementID);
 	}
 
 	var selectedSomethin:Bool = false;

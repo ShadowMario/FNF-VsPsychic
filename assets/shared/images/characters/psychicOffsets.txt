@@ -1,6 +1,6 @@
 idle 0 0
 singDOWN-alt 50 -120
-singDOWN 50 -120
+singDOWN 50 -55
 singRIGHT-alt 0 -60
 singRIGHT 40 -60
 singLEFT 30 0

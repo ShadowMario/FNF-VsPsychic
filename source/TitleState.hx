@@ -96,17 +96,22 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		FlxG.switchState(new ChartingState());
 		#else
-		new FlxTimer().start(1, function(tmr:FlxTimer)
-		{
+		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
 			startIntro();
-		});
-		#end
-
-		#if desktop
-		DiscordClient.initialize();
-		Application.current.onExit.add (function (exitCode) {
-			DiscordClient.shutdown();
-		 });
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.switchState(new FlashingState());
+		} else {
+			#if desktop
+			DiscordClient.initialize();
+			Application.current.onExit.add (function (exitCode) {
+				DiscordClient.shutdown();
+			});
+			#end
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+			{
+				startIntro();
+			});
+		}
 		#end
 	}
 
@@ -140,9 +145,11 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			if(FlxG.sound.music == null) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
-			FlxG.sound.music.fadeIn(4, 0, 0.7);
+				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			}
 		}
 
 		Conductor.changeBPM(102);
@@ -291,11 +298,7 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				if(FlxG.save.data.flashing == null && !FlashingSubState.leftState) {
-					FlxG.switchState(new FlashingSubState());
-				} else {
-					FlxG.switchState(new MainMenuState());
-				}
+				FlxG.switchState(new MainMenuState());
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
@@ -362,7 +365,7 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceLeft');
 		}
 
-		if(swagShader != null)
+		if(swagShader != null && ClientPrefs.flashing)
 			swagShader.updateAdd(60);
 
 		switch (curBeat)

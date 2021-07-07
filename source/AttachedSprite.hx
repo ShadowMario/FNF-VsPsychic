@@ -9,11 +9,11 @@ class AttachedSprite extends FlxSprite
 	public var sprTracker:FlxSprite;
 	public var xAdd:Float = 0;
 	public var yAdd:Float = 0;
-	public function new(file:String, ?anim:String = null, ?library:String = null, ?highQualityOnly:Bool = false, ?loop:Bool = false)
+	public function new(file:String, ?anim:String = null, ?library:String = null, ?loop:Bool = false)
 	{
 		super();
 		if(anim != null) {
-			frames = Paths.getSparrowAtlas(file, library, highQualityOnly);
+			frames = Paths.getSparrowAtlas(file, library);
 			animation.addByPrefix('idle', anim, 24, loop);
 			animation.play('idle');
 		} else {

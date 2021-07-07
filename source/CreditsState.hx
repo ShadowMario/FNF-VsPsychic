@@ -28,15 +28,15 @@ class CreditsState extends MusicBeatState
 		['RiverOaken',			'riveroaken',		'Project Lead & Animator\n"Wait, I made this???"',	'https://twitter.com/river_oaken',		0xFFC30085],
 		['iFlicky',				'iflicky',			'Main Composer\n"Berr dig a nerr nerr"',			'https://twitter.com/flicky_i',			0xFFC549DB],
 		['Shadow Mario',		'shadowmario',		'Main Programmer\n"WikiHow: How to handle fame."',	'https://twitter.com/Shadow_Mario_',	0xFFFFDD33],
-		['Salvati',				'salvati',			'Composer of Late Drive\n"Bottom text"',			'https://twitter.com/cyndacat76',		0xFF33FFFF],
+		['Salvati',				'salvati',			'Guest Composer of Late Drive\n"Bottom text"',		'https://twitter.com/cyndacat76',		0xFF33FFFF],
 		['slabraccoon',			'slabraccoon',		'Emotional Support Raccoon\n"*Feral growling*"',	'https://twitter.com/slabraccoon',		0xFFBC5223],
 		['Join our Discord!',	'discord',			'If you dare...',									'https://discord.gg/uE3vPYhXwR',		0xFF5165F6],
 		[''],
 		["Funkin' Crew"],
-		['ninjamuffin99',		'ninjamuffin99',	'Programmer of Friday Night Funkin\'',				'https://twitter.com/ninja_muffin99',	0xFFF73838],
-		['PhantomArcade',		'phantomarcade',	'Animator of Friday Night Funkin\'',				'https://twitter.com/PhantomArcade3K',	0xFFFFBB1B],
-		['evilsk8r',			'evilsk8r',			'Artist of Friday Night Funkin\'',					'https://twitter.com/evilsk8r',			0xFF53E52C],
-		['kawaisprite',			'kawaisprite',		'Composer of Friday Night Funkin\'',				'https://twitter.com/kawaisprite',		0xFF6475F3]
+		['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",				'https://twitter.com/ninja_muffin99',	0xFFF73838],
+		['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",					'https://twitter.com/PhantomArcade3K',	0xFFFFBB1B],
+		['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",					'https://twitter.com/evilsk8r',			0xFF53E52C],
+		['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",					'https://twitter.com/kawaisprite',		0xFF6475F3]
 	];
 
 	var bg:FlxSprite;

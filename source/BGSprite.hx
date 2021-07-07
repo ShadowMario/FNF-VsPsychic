@@ -6,11 +6,11 @@ import flixel.graphics.frames.FlxAtlasFrames;
 class BGSprite extends FlxSprite
 {
 	private var idleAnim:String;
-	public function new(image:String, x:Float = 0, y:Float = 0, ?scrollX:Float = 1, ?scrollY:Float = 1, ?animArray:Array<String> = null, ?loop:Bool = false, ?highQuality = false) {
+	public function new(image:String, x:Float = 0, y:Float = 0, ?scrollX:Float = 1, ?scrollY:Float = 1, ?animArray:Array<String> = null, ?loop:Bool = false) {
 		super(x, y);
 
 		if (animArray != null) {
-			frames = Paths.getSparrowAtlas(image, null, highQuality);
+			frames = Paths.getSparrowAtlas(image);
 			for (i in 0...animArray.length) {
 				var anim:String = animArray[i];
 				animation.addByPrefix(anim, anim, 24, loop);
@@ -20,7 +20,7 @@ class BGSprite extends FlxSprite
 				}
 			}
 		} else {
-			loadGraphic(Paths.image(image, null, highQuality));
+			loadGraphic(Paths.image(image));
 			active = false;
 		}
 		scrollFactor.set(scrollX, scrollY);

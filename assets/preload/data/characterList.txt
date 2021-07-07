@@ -6,14 +6,15 @@ pico
 mom
 mom-car
 bf-car
+gf-car
 parents-christmas
 monster-christmas
 bf-christmas
+gf-christmas
 monster
 bf-pixel
+gf-pixel
 senpai
 senpai-angry
 spirit
-tankman
-bf-holding-gf
 psychic

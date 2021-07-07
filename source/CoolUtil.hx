@@ -54,9 +54,9 @@ class CoolUtil
 		return dumbArray;
 	}
 
-	public static function precacheSound(sound:String, ?library:String = null, ?highQualityOnly:Bool = false):Void {
-		if(!Assets.cache.hasSound(Paths.sound(sound, library, highQualityOnly))) {
-			FlxG.sound.cache(Paths.sound(sound, library, highQualityOnly));
+	public static function precacheSound(sound:String, ?library:String = null):Void {
+		if(!Assets.cache.hasSound(Paths.sound(sound, library))) {
+			FlxG.sound.cache(Paths.sound(sound, library));
 		}
 	}
 

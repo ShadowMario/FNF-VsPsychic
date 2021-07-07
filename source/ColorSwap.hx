@@ -8,16 +8,24 @@ class ColorSwap {
 
 	public function new()
 	{
-		shader.uTime.value = [0];
+		shader.uTime.value = [0, 0, 0];
 		shader.money.value = [0];
 		shader.awesomeOutline.value = [false];
 	}
 
-	public function update(value:Float) {
-		shader.uTime.value[0] = value / 360.0;
+	public function update(value:Float, ?type:Int = 0) {
+		var divide:Float = 360;
+		switch(type) {
+			case 1 | 2: divide = 100;
+		}
+		shader.uTime.value[type] = value / divide;
 	}
-	public function updateAdd(value:Float) {
-		shader.uTime.value[0] += value / 360.0;
+	public function updateAdd(value:Float, ?type:Int = 0) {
+		var divide:Float = 360;
+		switch(type) {
+			case 1 | 2: divide = 100;
+		}
+		shader.uTime.value[type] += value / divide;
 	}
 }
 
@@ -70,7 +78,7 @@ class ColorSwapShader extends FlxShader {
 			return vec4(0.0, 0.0, 0.0, 0.0);
 		}
 
-		uniform float uTime;
+		uniform vec3 uTime;
 		uniform float money;
 		uniform bool awesomeOutline;
 
@@ -109,10 +117,11 @@ class ColorSwapShader extends FlxShader {
 			vec4 swagColor = vec4(rgb2hsv(vec3(color[0], color[1], color[2])), color[3]);
 
 			// [0] is the hue???
-			swagColor[0] += uTime;
-			// swagColor[1] += uTime;
-
-			// money += swagColor[0];
+			swagColor[0] += uTime[0];
+			swagColor[1] += uTime[1];
+			if(swagColor[1] < 0) swagColor[1] = 0;
+			else if(swagColor[1] > 1) swagColor[1] = 1;
+			swagColor[2] *= 1.0 + uTime[2];
 
 			color = vec4(hsv2rgb(vec3(swagColor[0], swagColor[1], swagColor[2])), swagColor[3]);
 

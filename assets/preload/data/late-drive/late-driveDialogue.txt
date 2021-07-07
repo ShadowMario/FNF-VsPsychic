@@ -1,0 +1,8 @@
+psychic:bf
+:0:talk:0.05:0:Huh?
+:0:talk:0.05:0:Where are we?
+:1:talk:0.05:0:Beep?
+:0:unamused:0.05:0:That much is obvious.
+:0:talk:0.05:0:It seems we're stuck in some sort of\nalternate reality...
+:1:talk:0.05:0:Eep skee dah?
+:0:talk:0.05:0:Since we're here anyway, I suppose one\nsong couldn't hurt.

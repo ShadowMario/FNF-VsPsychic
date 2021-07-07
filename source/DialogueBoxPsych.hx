@@ -14,6 +14,7 @@ import flixel.FlxCamera;
 
 using StringTools;
 
+// TO DO: Clean code? Maybe? idk
 class DialogueBoxPsych extends MusicBeatSubstate
 {
 	var dialogue:Alphabet;
@@ -28,59 +29,45 @@ class DialogueBoxPsych extends MusicBeatSubstate
 	var arrayCharacters:Array<FlxSprite> = [];
 	var arrayStartX:Array<Float> = [];
 
-	var cam:FlxCamera;
+	public static var cam:FlxCamera = null;
 	var currentText:Int = 1;
 	var offsetPos:Float = 600;
-	public function new(?dialogueList:Array<String>, black:FlxSprite, white:FlxSprite, cam:FlxCamera)
+
+	// This is where you add your characters, ez pz
+	function addCharacter(char:FlxSprite, name:String) {
+		switch(name) {
+			case 'bf':
+				char.frames = Paths.getSparrowAtlas('dialogue/BF_Dialogue');
+				char.animation.addByPrefix('talkIdle', 'BFTalk', 24, true); //Dialogue ended
+				char.animation.addByPrefix('talk', 'bftalkloop', 24, true); //During dialogue
+				char.animation.play('talkIdle', true);
+
+			case 'psychic':
+				char.frames = Paths.getSparrowAtlas('dialogue/Psy_Dialogue'); //oppa gangnam style xddddd kill me
+				char.animation.addByPrefix('talkIdle', 'PSYtalk', 24, true);
+				char.animation.addByPrefix('talk', 'PSY loop', 24, true);
+				char.animation.addByPrefix('angryIdle', 'PSY angry', 24, true);
+				char.animation.addByPrefix('angry', 'PSY ANGRY loop', 24, true);
+				char.animation.addByPrefix('unamusedIdle', 'PSY unamused', 24, true);
+				char.animation.addByPrefix('unamused', 'PSY UNAMUSED loop', 24, true);
+				char.animation.play('talkIdle', true);
+				char.y -= 140;
+		}
+	}
+
+
+
+	public function new(?dialogueList:Array<String>, song:String, black:FlxSprite, white:FlxSprite)
 	{
 		super();
 
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'psychic':
-				FlxG.sound.playMusic(Paths.music('psy-dialogue'), 0);
-				FlxG.sound.music.fadeIn(2, 0, 1);
+		if(song != '') {
+			FlxG.sound.playMusic(Paths.music(song), 0);
+			FlxG.sound.music.fadeIn(2, 0, 1);
 		}
-		this.cam = cam;
 		this.dialogueList = dialogueList;
 		var splitName:Array<String> = dialogueList[0].split(":");
-
-		for (i in 0...2) {
-			var x:Float = 50;
-			var char:FlxSprite = new FlxSprite(50, 180);
-			char.x -= offsetPos;
-			switch(splitName[i]) {
-				case 'bf':
-					char.frames = Paths.getSparrowAtlas('dialogue/BF_Dialogue');
-					char.animation.addByPrefix('talkIdle', 'BFTalk', 24, true);
-					char.animation.addByPrefix('talk', 'bftalkloop', 24, true);
-					char.animation.play('talkIdle', true);
-
-				case 'psychic':
-					char.frames = Paths.getSparrowAtlas('dialogue/Psy_Dialogue'); //oppa gangnam style xddddd kill me
-					char.animation.addByPrefix('talkIdle', 'PSYtalk', 24, true);
-					char.animation.addByPrefix('talk', 'PSY loop', 24, true);
-					char.animation.addByPrefix('angryIdle', 'PSY angry', 24, true);
-					char.animation.addByPrefix('angry', 'PSY ANGRY loop', 24, true);
-					char.animation.addByPrefix('unamusedIdle', 'PSY unamused', 24, true);
-					char.animation.addByPrefix('unamused', 'PSY UNAMUSED loop', 24, true);
-					char.animation.play('talkIdle', true);
-					char.y -= 140;
-			}
-			char.setGraphicSize(Std.int(char.width * 0.7));
-			char.updateHitbox();
-			if(i > 0) {
-				x = FlxG.width - char.width - 100;
-				char.x = x + offsetPos;
-			}
-			char.antialiasing = ClientPrefs.globalAntialiasing;
-			char.scrollFactor.set();
-			char.cameras = [cam];
-			//char.visible = false;
-			add(char);
-			arrayCharacters.push(char);
-			arrayStartX.push(x);
-		}
+		spawnCharacters(splitName);
 
 		box = new FlxSprite(70, 370);
 		box.frames = Paths.getSparrowAtlas('speech_bubble');
@@ -104,6 +91,37 @@ class DialogueBoxPsych extends MusicBeatSubstate
 	var dialogueStarted:Bool = false;
 	var dialogueEnded:Bool = false;
 
+	function spawnCharacters(splitName:Array<String>) {
+		for (i in 0...arrayCharacters.length) {
+			var char:FlxSprite = arrayCharacters[0];
+			remove(char);
+			arrayCharacters.remove(char);
+			arrayStartX.remove(arrayStartX[0]);
+		}
+		arrayCharacters = [];
+		arrayStartX = [];
+
+		for (i in 0...splitName.length) {
+			var x:Float = 50;
+			var char:FlxSprite = new FlxSprite(50, 180);
+			char.x -= offsetPos;
+			addCharacter(char, splitName[i]);
+			char.setGraphicSize(Std.int(char.width * 0.7));
+			char.updateHitbox();
+			if(i > 0) {
+				x = FlxG.width - char.width - 100;
+				char.x = x + offsetPos;
+			}
+			char.antialiasing = ClientPrefs.globalAntialiasing;
+			char.scrollFactor.set();
+			char.cameras = [cam];
+			char.visible = false;
+			add(char);
+			arrayCharacters.push(char);
+			arrayStartX.push(x);
+		}
+	}
+
 	var textX = 90;
 	var textY = 430;
 	var scrollSpeed = 4500;
@@ -111,7 +129,6 @@ class DialogueBoxPsych extends MusicBeatSubstate
 	override function update(elapsed:Float)
 	{
 		if(!dialogueOpened) {
-			bgWhite.visible = false;
 			bgFade.alpha -= 0.5 * elapsed;
 			if(bgFade.alpha <= 0) {
 				remove(bgFade);
@@ -157,6 +174,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 					remove(daText);
 					daText = null;
 					updateBoxOffsets();
+					FlxG.sound.music.fadeOut(1, 0);
 				} else {
 					startNextDialog();
 				}
@@ -210,7 +228,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 					}
 				}
 			}
-		} else {
+		} else { //Dialogue ending
 			if(box != null && box.animation.curAnim.curFrame <= 0) {
 				remove(box);
 				box = null;
@@ -228,7 +246,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 				var leChar:FlxSprite = arrayCharacters[i];
 				if(leChar != null) {
 					leChar.x += scrollSpeed * (i == 1 ? 1 : -1) * elapsed;
-					leChar.alpha -= 1 * elapsed;
+					leChar.alpha -= elapsed * 10;
 				}
 			}
 
@@ -252,6 +270,16 @@ class DialogueBoxPsych extends MusicBeatSubstate
 	function startNextDialog():Void
 	{
 		var splitName:Array<String> = dialogueList[currentText].split(":");
+		if(splitName.length <= 2) {
+			spawnCharacters(splitName);
+			lastCharacter = -1;
+			lastBoxType = -1;
+			for (i in 0...arrayCharacters.length) {
+				arrayCharacters[i].visible = true;
+			}
+			currentText++;
+			splitName = dialogueList[currentText].split(":");
+		}
 		var character:Int = Std.parseInt(splitName[1]);
 		var speed:Float = Std.parseFloat(splitName[3]);
 		var boxType:Int = Std.parseInt(splitName[4]);

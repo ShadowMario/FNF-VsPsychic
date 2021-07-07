@@ -1,7 +1,11 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.group.FlxSpriteGroup;
+import flixel.util.FlxColor;
+import flixel.text.FlxText;
 
 using StringTools;
 
@@ -27,7 +31,7 @@ class Achievements {
 		["Digital ft. Salvati",			"Beat the \"Late Drive\" Stage from the Chart Editor.",	 true]
 	];
 
-	public static var achievementsUnlocked:Array<Dynamic> = [ //Save string, is it unlocked?
+	public static var achievementsUnlocked:Array<Dynamic> = [ //Save string + is it unlocked?
 		['friday_night_play', false],	//0
 		['week1_nomiss', false],		//1
 		['week2_nomiss', false],		//2
@@ -49,13 +53,10 @@ class Achievements {
 	];
 
 	public static var henchmenDeath:Int = 0;
-	public static var nextAchievement:Float = 0;
-
 	public static function unlockAchievement(id:Int):Void {
 		FlxG.log.add('Completed achievement "' + achievementsStuff[id][0] +'"');
 		achievementsUnlocked[id][1] = true;
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		nextAchievement = 3.9;
 	}
 
 	public static function loadAchievements():Void {
@@ -110,5 +111,60 @@ class AttachedAchievement extends FlxSprite {
 			setPosition(sprTracker.x - 130, sprTracker.y + 25);
 
 		super.update(elapsed);
+	}
+}
+
+class AchievementObject extends FlxSpriteGroup {
+	public var onFinish:Void->Void = null;
+	public function new(id:Int, ?camera:FlxCamera = null)
+	{
+		super(x, y);
+		ClientPrefs.saveSettings();
+		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
+		achievementBG.scrollFactor.set();
+
+		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic(Paths.image('achievementgrid'), true, 150, 150);
+		achievementIcon.animation.add('icon', [id], 0, false, false);
+		achievementIcon.animation.play('icon');
+		achievementIcon.scrollFactor.set();
+		achievementIcon.setGraphicSize(Std.int(achievementIcon.width * (2 / 3)));
+		achievementIcon.updateHitbox();
+		achievementIcon.antialiasing = ClientPrefs.globalAntialiasing;
+
+		var achievementName:FlxText = new FlxText(achievementIcon.x + achievementIcon.width + 20, achievementIcon.y + 16, 280, Achievements.achievementsStuff[id][0], 16);
+		achievementName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementName.scrollFactor.set();
+
+		var achievementText:FlxText = new FlxText(achievementName.x, achievementName.y + 32, 280, Achievements.achievementsStuff[id][1], 16);
+		achievementText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementText.scrollFactor.set();
+
+		add(achievementBG);
+		add(achievementName);
+		add(achievementText);
+		add(achievementIcon);
+
+		var cam:Array<FlxCamera> = FlxCamera.defaultCameras;
+		if(camera != null) {
+			cam = [camera];
+		}
+		alpha = 0;
+		achievementBG.cameras = cam;
+		achievementName.cameras = cam;
+		achievementText.cameras = cam;
+		achievementIcon.cameras = cam;
+		FlxTween.tween(this, {alpha: 1}, 0.5);
+		FlxTween.tween(this, {alpha: 0}, 0.5, {
+			startDelay: 3,
+			onComplete: function(tween:FlxTween) {
+				remove(this);
+				if(onFinish != null) onFinish();
+			}
+		});
+	}
+
+	override function destroy() {
+		FlxTween.cancelTweensOf(this);
+		super.destroy();
 	}
 }

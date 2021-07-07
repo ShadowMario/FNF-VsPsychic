@@ -35,9 +35,13 @@ class StrumNote extends FlxSprite
 		animation.play(anim, force);
 		centerOffsets();
 		if(animation.curAnim.name == 'static') {
-			colorSwap.update(0);
+			for (i in 0...3) {
+				colorSwap.update(0, i);
+			}
 		} else {
-			colorSwap.update(ClientPrefs.arrowColors[noteData]);
+			for (i in 0...3) {
+				colorSwap.update(ClientPrefs.arrowHSV[noteData][i], i);
+			}
 			if(animation.curAnim.name == 'confirm' && !PlayState.curStage.startsWith('school')) {
 				offset.x -= 13;
 				offset.y -= 13;

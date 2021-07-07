@@ -35,7 +35,9 @@ class NoteSplash extends FlxSprite
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
 		}
-		colorSwap.update(ClientPrefs.arrowColors[note]);
+		for (i in 0...3) {
+			colorSwap.update(ClientPrefs.arrowHSV[note % 4][i], i);
+		}
 	}
 
 	override function update(elapsed:Float) {

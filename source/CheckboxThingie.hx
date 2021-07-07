@@ -27,7 +27,7 @@ class CheckboxThingie extends FlxSprite
 		}
 
 		if (sprTracker != null)
-			setPosition(sprTracker.x - 100, sprTracker.y);
+			setPosition(sprTracker.x - 100, sprTracker.y + 5);
 
 		super.update(elapsed);
 	}

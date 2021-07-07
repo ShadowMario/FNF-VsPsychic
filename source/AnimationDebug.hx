@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -33,6 +36,10 @@ class AnimationDebug extends FlxState
 
 	override function create()
 	{
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("Animation Debug", "Character: " + daAnim);
+		#end
 		FlxG.sound.music.stop();
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);

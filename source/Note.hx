@@ -24,8 +24,7 @@ class Note extends FlxSprite
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
-	public var altAnim:Bool = false;
-	public var heyNote:Bool = false;
+	public var noteType:Int = 0;
 
 	public var psychicAbility:String = '';
 	public var psychicVal1:String = '';
@@ -43,7 +42,7 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
 	{
 		super();
 
@@ -57,6 +56,7 @@ class Note extends FlxSprite
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
+		if(!inEditor) this.strumTime += ClientPrefs.noteOffset;
 
 		this.noteData = noteData;
 
@@ -98,24 +98,31 @@ class Note extends FlxSprite
 				animation.addByPrefix('blueScroll', 'blue0');
 				animation.addByPrefix('purpleScroll', 'purple0');
 
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
+				if (isSustainNote)
+				{
+					animation.addByPrefix('purpleholdend', 'pruple end hold');
+					animation.addByPrefix('greenholdend', 'green hold end');
+					animation.addByPrefix('redholdend', 'red hold end');
+					animation.addByPrefix('blueholdend', 'blue hold end');
 
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
+					animation.addByPrefix('purplehold', 'purple hold piece');
+					animation.addByPrefix('greenhold', 'green hold piece');
+					animation.addByPrefix('redhold', 'red hold piece');
+					animation.addByPrefix('bluehold', 'blue hold piece');
+				}
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = ClientPrefs.globalAntialiasing;
 		}
 
-		colorSwap = new ColorSwap();
-		shader = colorSwap.shader;
-		colorSwap.update(ClientPrefs.arrowColors[noteData]);
+		if(noteData > -1) {
+			colorSwap = new ColorSwap();
+			shader = colorSwap.shader;
+			for (i in 0...3) {
+				colorSwap.update(ClientPrefs.arrowHSV[noteData % 4][i], i);
+			}
+		}
 		switch (noteData)
 		{
 			case 0:

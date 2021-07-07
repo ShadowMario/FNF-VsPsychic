@@ -5,6 +5,7 @@ import Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -90,12 +91,6 @@ class StoryMenuState extends MusicBeatState
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
-
-		if (FlxG.sound.music != null)
-		{
-			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		}
 
 		persistentUpdate = persistentDraw = true;
 
@@ -212,6 +207,12 @@ class StoryMenuState extends MusicBeatState
 		super.create();
 	}
 
+	override function closeSubState() {
+		persistentUpdate = true;
+		changeWeek();
+		super.closeSubState();
+	}
+
 	override function update(elapsed:Float)
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
@@ -266,6 +267,10 @@ class StoryMenuState extends MusicBeatState
 			if (controls.ACCEPT)
 			{
 				selectWeek();
+			} else if(controls.RESET) {
+				persistentUpdate = false;
+				openSubState(new ResetScoreSubState('', curDifficulty, '', (curWeek == weekData.length-1 ? -99 : curWeek)));
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 		}
 
@@ -320,6 +325,7 @@ class StoryMenuState extends MusicBeatState
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
+				FreeplayState.destroyFreeplayVocals();
 			});
 		}
 	}

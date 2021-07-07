@@ -186,17 +186,15 @@ class DialogueBox extends FlxSpriteGroup
 			if (dialogueEnded)
 			{
 				remove(dialogue);
-
-				FlxG.sound.play(Paths.sound('clickText'), 0.8);
-
 				if (dialogueList[1] == null && dialogueList[0] != null)
 				{
 					if (!isEnding)
 					{
 						isEnding = true;
+						FlxG.sound.play(Paths.sound('clickText'), 0.8);	
 
 						if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns')
-							FlxG.sound.music.fadeOut(2.2, 0);
+							FlxG.sound.music.fadeOut(1.5, 0);
 
 						new FlxTimer().start(0.2, function(tmr:FlxTimer)
 						{
@@ -209,7 +207,7 @@ class DialogueBox extends FlxSpriteGroup
 							dropText.alpha = swagDialogue.alpha;
 						}, 5);
 
-						new FlxTimer().start(1.2, function(tmr:FlxTimer)
+						new FlxTimer().start(1.5, function(tmr:FlxTimer)
 						{
 							finishThing();
 							kill();
@@ -220,10 +218,12 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					dialogueList.remove(dialogueList[0]);
 					startDialogue();
+					FlxG.sound.play(Paths.sound('clickText'), 0.8);	
 				}
 			}
 			else if (dialogueStarted)
 			{
+				FlxG.sound.play(Paths.sound('clickText'), 0.8);	
 				swagDialogue.skip();
 			}
 		}
