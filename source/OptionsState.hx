@@ -670,7 +670,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 		unselectableOptions[1],
 		'Downscroll',
 		noCheckbox[1],
-		'Note Splashes',
 		'Hide HUD',
 		'Flashing Lights',
 		'Camera Zooms'
@@ -1008,7 +1007,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
 				}
-				checkbox.set_daValue(daValue);
+				checkbox.daValue = daValue;
 			}
 		}
 		for (i in 0...grpTexts.members.length) {

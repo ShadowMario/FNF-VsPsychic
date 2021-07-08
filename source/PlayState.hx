@@ -83,7 +83,6 @@ class PlayState extends MusicBeatState
 	private var strumLinePsychicNotes:FlxTypedGroup<AttachedSprite>;
 	private var strumLineNotes:FlxTypedGroup<StrumNote>;
 	private var playerStrums:FlxTypedGroup<StrumNote>;
-	private var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -199,7 +198,6 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camFrontEffect);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camAchievement);
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		DialogueBoxPsych.cam = camHUD;
 
 		FlxCamera.defaultCameras = [camGame];
@@ -882,11 +880,6 @@ class PlayState extends MusicBeatState
 		add(strumLinePsychicNotes);
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-		add(grpNoteSplashes);
-
-		var splash:NoteSplash = new NoteSplash(100, 100, 0);
-		grpNoteSplashes.add(splash);
-		splash.alpha = 0.0;
 
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
@@ -955,7 +948,6 @@ class PlayState extends MusicBeatState
 
 		strumLinePsychicNotes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
-		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
@@ -2880,13 +2872,6 @@ class PlayState extends MusicBeatState
 			score = 200;
 		}
 
-		if(daRating == 'sick' && ClientPrefs.noteSplashes && note != null)
-		{
-			var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-			splash.setupNoteSplash(note.x, note.y, note.noteData);
-			grpNoteSplashes.add(splash);
-		}
-
 		if(!practiceMode) {
 			songScore += score;
 			songHits++;
@@ -3566,7 +3551,7 @@ class PlayState extends MusicBeatState
 							return arrayIDs[i];
 						}
 					case 9:
-						if(ratingPercent < 0.2 && !practiceMode) {
+						if(ratingPercent < 0.2 && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}
@@ -3581,7 +3566,7 @@ class PlayState extends MusicBeatState
 							return arrayIDs[i];
 						}
 					case 12:
-						if(boyfriend.holdTimer >= 20) {
+						if(boyfriend.holdTimer >= 20 && !practiceMode) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}
