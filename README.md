@@ -1,7 +1,7 @@
 # FNF-VsPsychic
 A FNF Mod made mainly by RiverOaken, Shadow Mario and iFlicky
 
-Are you interested on the Engine itself? [Click here!](https://github.com/ShadowMario/FNF-PsychEngine)
+Are you interested on the Engine itself? [Click here!](https://gamebanana.com/mods/309789)
 
 | SOUND CREDITS |
 |---------------|
